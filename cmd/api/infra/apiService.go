@@ -26,6 +26,9 @@ func (api *APIService) Start() {
 		Handler: r,
 	}
 
+	iocAdapter := NewIocAdapter()
+	iocAdapter.Start(r)
+
 	glog.Info("Server starting")
 	if err := server.ListenAndServe(); err != nil {
 		if err == http.ErrServerClosed {

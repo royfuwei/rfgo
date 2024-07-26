@@ -1,13 +1,14 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	ginrest "github.com/royfuwei/rfgo/cmd/api/infra"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run()
+	forever := make(chan bool)
+	go func() {
+		apiService := ginrest.NewAPIService()
+		apiService.Start()
+	}()
+	<-forever
 }
