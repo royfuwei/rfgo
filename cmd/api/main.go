@@ -1,13 +1,13 @@
 package main
 
 import (
-	ginrest "github.com/royfuwei/rfgo/cmd/api/infra"
+	appApi "github.com/royfuwei/rfgo/app/api"
 )
 
 func main() {
 	forever := make(chan bool)
 	go func() {
-		apiService := ginrest.NewAPIService()
+		apiService := appApi.NewAPIService()
 		apiService.Start()
 	}()
 	<-forever
