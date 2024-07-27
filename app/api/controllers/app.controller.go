@@ -24,15 +24,17 @@ func NewAppController(e *gin.Engine, di AppDI) {
 	handler := &appHandler{
 		DI: di,
 	}
-	router := e.Group("/")
-	router.GET("", handler.GetApp)
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	e.GET("/", handler.GetApp)
+	router := e.Group("/app")
+	router.GET("/", handler.GetApp)
 }
 
+// @Summary Get Api app name
+// @Description
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} domain.App	"ok"
+// @Router /app [get]
 func (h *appHandler) GetApp(c *gin.Context) {
 	data := h.DI.AppUCase.GetApp()
 	c.JSON(http.StatusOK, data)
