@@ -15,10 +15,9 @@
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io:8080",
-    "basePath": "/v2",
+    "host": "localhost:8080",
     "paths": {
-        "/": {
+        "/app": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -36,6 +35,35 @@
                     }
                 }
             }
+        },
+        "/jwt/sign": {
+            "post": {
+                "description": "Sign jwt token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Sign jwt token",
+                "parameters": [
+                    {
+                        "description": "account login 內容",
+                        "name": "default",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.ReqJwtSign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {}
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -43,6 +71,14 @@
             "type": "object",
             "properties": {
                 "app": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.ReqJwtSign": {
+            "type": "object",
+            "properties": {
+                "uid": {
                     "type": "string"
                 }
             }

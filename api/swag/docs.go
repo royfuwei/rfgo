@@ -24,7 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/": {
+        "/app": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -42,6 +42,35 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/jwt/sign": {
+            "post": {
+                "description": "Sign jwt token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Sign jwt token",
+                "parameters": [
+                    {
+                        "description": "account login 內容",
+                        "name": "default",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.ReqJwtSign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {}
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -52,6 +81,14 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "domain.ReqJwtSign": {
+            "type": "object",
+            "properties": {
+                "uid": {
+                    "type": "string"
+                }
+            }
         }
     }
 }`
@@ -59,8 +96,8 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "petstore.swagger.io:8080",
-	BasePath:         "/v2",
+	Host:             "localhost:8080",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "rfgo open API",
 	Description:      "This is a sample server Petstore server.",
