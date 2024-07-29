@@ -1,11 +1,15 @@
-basePath: /v2
 definitions:
   domain.App:
     properties:
       app:
         type: string
     type: object
-host: petstore.swagger.io:8080
+  domain.ReqJwtSign:
+    properties:
+      uid:
+        type: string
+    type: object
+host: localhost:8080
 info:
   contact:
     email: support@swagger.io
@@ -19,7 +23,7 @@ info:
   title: rfgo open API
   version: "1.0"
 paths:
-  /:
+  /app:
     get:
       consumes:
       - application/json
@@ -31,4 +35,23 @@ paths:
           schema:
             $ref: '#/definitions/domain.App'
       summary: Get Api app name
+  /jwt/sign:
+    post:
+      consumes:
+      - application/json
+      description: Sign jwt token
+      parameters:
+      - description: account login 內容
+        in: body
+        name: default
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ReqJwtSign'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema: {}
+      summary: Sign jwt token
 swagger: "2.0"
