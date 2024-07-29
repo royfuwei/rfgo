@@ -14,6 +14,12 @@ type Claims struct {
 
 type TokenClaims interface{}
 
+type ReqJwtSign struct {
+	Uid *string `json:"uid"`
+}
+
 type JwtService interface {
 	JwtSign(expiresTime time.Duration, uid *string, jwtId *string) (expiresAt int64, token string, err error)
+	JwtVerify(token string) (*Claims, error)
+	JwtDecode(token string) (TokenClaims, error)
 }
