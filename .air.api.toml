@@ -5,7 +5,7 @@ tmp_dir = "tmp"
 [build]
   args_bin = []
   bin = "./tmp/api"
-  cmd = "swag init -o api/swag & go build -o ./tmp/api cmd/api/main.go"
+  cmd = "swag init -d ./cmd/api,app/api,pkg/domain -o api/swag && go build -o ./tmp/api cmd/api/main.go"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata", "swagger", "api/swag"]
   exclude_file = []
