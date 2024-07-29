@@ -16,8 +16,8 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host petstore.swagger.io:8080
-// @BasePath /v2
+// @host localhost:8080
+// @BasePath
 func main() {
 	forever := make(chan bool)
 	go func() {
