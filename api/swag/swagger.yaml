@@ -4,6 +4,11 @@ definitions:
       app:
         type: string
     type: object
+  domain.ReqJwtDecode:
+    properties:
+      token:
+        type: string
+    type: object
   domain.ReqJwtSign:
     properties:
       uid:
@@ -35,6 +40,25 @@ paths:
           schema:
             $ref: '#/definitions/domain.App'
       summary: Get Api app name
+  /jwt/decode:
+    post:
+      consumes:
+      - application/json
+      description: Decode jwt token
+      parameters:
+      - description: account login 內容
+        in: body
+        name: default
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ReqJwtDecode'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema: {}
+      summary: Decode jwt token
   /jwt/sign:
     post:
       consumes:
