@@ -43,6 +43,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/jwt/decode": {
+            "post": {
+                "description": "Decode jwt token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Decode jwt token",
+                "parameters": [
+                    {
+                        "description": "account login 內容",
+                        "name": "default",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.ReqJwtDecode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/jwt/sign": {
             "post": {
                 "description": "Sign jwt token",
@@ -78,6 +107,14 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "app": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.ReqJwtDecode": {
+            "type": "object",
+            "properties": {
+                "token": {
                     "type": "string"
                 }
             }
