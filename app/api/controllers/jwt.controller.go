@@ -26,6 +26,7 @@ func NewJwtController(e *gin.Engine, di DI) {
 	}
 	router := e.Group("/jwt")
 	router.POST("/sign", handler.JwtSign)
+	router.POST("/decode", handler.JwtDecode)
 }
 
 // @Summary Sign jwt token
@@ -47,4 +48,27 @@ func (h *jwtHandler) JwtSign(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{"expiresAt": expiresAt, "token": token})
+}
+
+// @Summary Decode jwt token
+// @Description	Decode jwt token
+// @Accept  json
+// @Produce  json
+// @Param default body domain.ReqJwtDecode true "account login 內容"
+// @Success 200 {object} domain.TokenClaims	"ok"
+// @Router /jwt/decode [post]
+func (h *jwtHandler) JwtDecode(c *gin.Context) {
+	var req domain.ReqJwtDecode
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	token := req.Token
+	// claims, err := h.DI.JwtService.JwtDecode(token)
+	claims, err := h.DI.JwtService.JwtVerify(token)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(200, claims)
 }

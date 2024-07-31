@@ -47,17 +47,17 @@ func (svc *jwtService) JwtSign(expiresTime time.Duration, uid *string, jwtId *st
 	return expiresAt, token, err
 }
 
-func (svc *jwtService) JwtDecode(token string) (domain.TokenClaims, error) {
+func (svc *jwtService) JwtDecode(token *string) (domain.TokenClaims, error) {
 	claims := &domain.Claims{}
-	_, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
+	_, err := jwt.ParseWithClaims(*token, claims, func(token *jwt.Token) (interface{}, error) {
 		return svc.verifyKey, nil
 	}, jwt.WithStrictDecoding())
 	return claims, err
 }
 
-func (svc *jwtService) JwtVerify(token string) (*domain.Claims, error) {
+func (svc *jwtService) JwtVerify(token *string) (*domain.Claims, error) {
 	claims := &domain.Claims{}
-	_, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
+	_, err := jwt.ParseWithClaims(*token, claims, func(token *jwt.Token) (interface{}, error) {
 		return svc.verifyKey, nil
 	})
 	return claims, err
