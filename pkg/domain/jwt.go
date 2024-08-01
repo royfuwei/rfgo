@@ -9,26 +9,25 @@ import (
 
 // custom claims
 type Claims struct {
-	Uid string `json:"uid"`
-	jwt.RegisteredClaims
+	Uid           string `json:"uid"`
+	jwt.MapClaims `json:",inline"`
 }
-
-type TokenClaims interface{}
 
 type ReqJwtSign struct {
 	Uid *string `json:"uid"`
 }
-type ReqJwtDecode struct {
+type ReqJwtToken struct {
 	Token *string `json:"token"`
 }
 
 type JwtService interface {
 	JwtSign(expiresTime time.Duration, uid *string, jwtId *string) (expiresAt int64, token string, err error)
-	JwtVerify(token *string) (*Claims, error)
-	JwtDecode(token *string) (TokenClaims, error)
+	JwtVerify(token *string) (*jwt.MapClaims, error)
+	JwtDecode(token *string) (*jwt.MapClaims, error)
 }
 
 type JwtController interface {
 	JwtSign(c *gin.Context)
 	JwtDecode(c *gin.Context)
+	JwtVerify(c *gin.Context)
 }
