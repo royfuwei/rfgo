@@ -4,14 +4,14 @@ definitions:
       app:
         type: string
     type: object
-  domain.ReqJwtDecode:
-    properties:
-      token:
-        type: string
-    type: object
   domain.ReqJwtSign:
     properties:
       uid:
+        type: string
+    type: object
+  domain.ReqJwtToken:
+    properties:
+      token:
         type: string
     type: object
 host: localhost:8080
@@ -46,12 +46,12 @@ paths:
       - application/json
       description: Decode jwt token
       parameters:
-      - description: account login 內容
+      - description: json web token
         in: body
         name: default
         required: true
         schema:
-          $ref: '#/definitions/domain.ReqJwtDecode'
+          $ref: '#/definitions/domain.ReqJwtToken'
       produces:
       - application/json
       responses:
@@ -65,7 +65,7 @@ paths:
       - application/json
       description: Sign jwt token
       parameters:
-      - description: account login 內容
+      - description: jwt sign
         in: body
         name: default
         required: true
@@ -78,4 +78,23 @@ paths:
           description: ok
           schema: {}
       summary: Sign jwt token
+  /jwt/verify:
+    post:
+      consumes:
+      - application/json
+      description: Verify jwt token
+      parameters:
+      - description: json web token
+        in: body
+        name: default
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ReqJwtToken'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema: {}
+      summary: Verify jwt token
 swagger: "2.0"

@@ -55,12 +55,12 @@ const docTemplate = `{
                 "summary": "Decode jwt token",
                 "parameters": [
                     {
-                        "description": "account login 內容",
+                        "description": "json web token",
                         "name": "default",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.ReqJwtDecode"
+                            "$ref": "#/definitions/domain.ReqJwtToken"
                         }
                     }
                 ],
@@ -84,12 +84,41 @@ const docTemplate = `{
                 "summary": "Sign jwt token",
                 "parameters": [
                     {
-                        "description": "account login 內容",
+                        "description": "jwt sign",
                         "name": "default",
                         "in": "body",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/domain.ReqJwtSign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/jwt/verify": {
+            "post": {
+                "description": "Verify jwt token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Verify jwt token",
+                "parameters": [
+                    {
+                        "description": "json web token",
+                        "name": "default",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.ReqJwtToken"
                         }
                     }
                 ],
@@ -111,18 +140,18 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.ReqJwtDecode": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                }
-            }
-        },
         "domain.ReqJwtSign": {
             "type": "object",
             "properties": {
                 "uid": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.ReqJwtToken": {
+            "type": "object",
+            "properties": {
+                "token": {
                     "type": "string"
                 }
             }
