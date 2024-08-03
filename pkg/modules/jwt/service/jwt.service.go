@@ -26,14 +26,22 @@ func NewJwtService(privateKeyPath, publicKeyPath string) domain.JwtService {
 	return svc
 }
 
-func (svc *jwtService) JwtSign(expiresTime time.Duration, uid *string, jwtId *string) (expiresAt int64, token string, err error) {
+func (svc *jwtService) JwtSign(expiresDuration time.Duration, uid *string, jwtId *string) (expiresAt int64, token string, err error) {
 	now := time.Now()
-	expiresAt = now.Add(time.Duration(time.Duration(3600).Seconds())).Unix()
-	claims := jwt.MapClaims{
-		"uid": uid,
-		"iss": "rfgo",
-		"iat": now.Unix(),
-		"exp": expiresAt,
+	expiresTime := jwt.NewNumericDate(now.Add(expiresDuration * time.Second))
+	expiresAt = expiresTime.Time.Unix()
+	claims := domain.Claims{
+		Uid: *uid,
+		RegisteredClaims: jwt.RegisteredClaims{
+			// A usual scenario is to set the expiration time relative to the current time
+			ExpiresAt: expiresTime,
+			IssuedAt:  jwt.NewNumericDate(now),
+			NotBefore: jwt.NewNumericDate(now),
+			Issuer:    "test",
+			Subject:   "somebody",
+			ID:        "1",
+			Audience:  []string{"somebody_else"},
+		},
 	}
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
 	token, err = tokenClaims.SignedString(svc.signKey)

@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"time"
-
 	"github.com/gin-gonic/gin"
 	"github.com/royfuwei/rfgo/pkg/domain"
 )
@@ -43,7 +41,7 @@ func (h *jwtHandler) JwtSign(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	expiresAt, token, err := h.DI.JwtService.JwtSign(time.Duration(time.Duration.Seconds(60*60)), req.Uid, nil)
+	expiresAt, token, err := h.DI.JwtService.JwtSign(3600, req.Uid, nil)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
