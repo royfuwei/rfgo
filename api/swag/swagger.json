@@ -60,7 +60,9 @@
                 "responses": {
                     "200": {
                         "description": "ok",
-                        "schema": {}
+                        "schema": {
+                            "$ref": "#/definitions/domain.TokenClaimsDTO"
+                        }
                     }
                 }
             }
@@ -89,7 +91,9 @@
                 "responses": {
                     "200": {
                         "description": "ok",
-                        "schema": {}
+                        "schema": {
+                            "$ref": "#/definitions/domain.TokenClaimsDTO"
+                        }
                     }
                 }
             }
@@ -118,7 +122,9 @@
                 "responses": {
                     "200": {
                         "description": "ok",
-                        "schema": {}
+                        "schema": {
+                            "$ref": "#/definitions/domain.TokenClaimsDTO"
+                        }
                     }
                 }
             }
@@ -145,6 +151,14 @@
             "type": "object",
             "properties": {
                 "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.TokenClaimsDTO": {
+            "type": "object",
+            "properties": {
+                "uid": {
                     "type": "string"
                 }
             }

@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"time"
-
 	"github.com/gin-gonic/gin"
 	"github.com/royfuwei/rfgo/pkg/domain"
 )
@@ -35,7 +33,7 @@ func NewJwtController(e *gin.Engine, di DI) {
 // @Accept  json
 // @Produce  json
 // @Param default body domain.ReqJwtSign true "jwt sign"
-// @Success 200 {object} jwt.MapClaims	"ok"
+// @Success 200 {object} domain.TokenClaimsDTO	"ok"
 // @Router /jwt/sign [post]
 func (h *jwtHandler) JwtSign(c *gin.Context) {
 	var req domain.ReqJwtSign
@@ -43,7 +41,7 @@ func (h *jwtHandler) JwtSign(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	expiresAt, token, err := h.DI.JwtService.JwtSign(time.Duration(time.Duration.Seconds(60*60)), req.Uid, nil)
+	expiresAt, token, err := h.DI.JwtService.JwtSign(3600, req.Uid, nil)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -56,7 +54,7 @@ func (h *jwtHandler) JwtSign(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param default body domain.ReqJwtToken true "json web token"
-// @Success 200 {object} jwt.MapClaims	"ok"
+// @Success 200 {object} domain.TokenClaimsDTO	"ok"
 // @Router /jwt/decode [post]
 func (h *jwtHandler) JwtDecode(c *gin.Context) {
 	var req domain.ReqJwtToken
@@ -78,7 +76,7 @@ func (h *jwtHandler) JwtDecode(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param default body domain.ReqJwtToken true "json web token"
-// @Success 200 {object} jwt.MapClaims	"ok"
+// @Success 200 {object} domain.TokenClaimsDTO	"ok"
 // @Router /jwt/verify [post]
 func (h *jwtHandler) JwtVerify(c *gin.Context) {
 	var req domain.ReqJwtToken

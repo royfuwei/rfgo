@@ -14,6 +14,11 @@ definitions:
       token:
         type: string
     type: object
+  domain.TokenClaimsDTO:
+    properties:
+      uid:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -57,7 +62,8 @@ paths:
       responses:
         "200":
           description: ok
-          schema: {}
+          schema:
+            $ref: '#/definitions/domain.TokenClaimsDTO'
       summary: Decode jwt token
   /jwt/sign:
     post:
@@ -76,7 +82,8 @@ paths:
       responses:
         "200":
           description: ok
-          schema: {}
+          schema:
+            $ref: '#/definitions/domain.TokenClaimsDTO'
       summary: Sign jwt token
   /jwt/verify:
     post:
@@ -95,6 +102,7 @@ paths:
       responses:
         "200":
           description: ok
-          schema: {}
+          schema:
+            $ref: '#/definitions/domain.TokenClaimsDTO'
       summary: Verify jwt token
 swagger: "2.0"
