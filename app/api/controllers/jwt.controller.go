@@ -35,7 +35,7 @@ func NewJwtController(e *gin.Engine, di DI) {
 // @Accept  json
 // @Produce  json
 // @Param default body domain.ReqJwtSign true "jwt sign"
-// @Success 200 {object} jwt.MapClaims	"ok"
+// @Success 200 {object} domain.TokenClaimsDTO	"ok"
 // @Router /jwt/sign [post]
 func (h *jwtHandler) JwtSign(c *gin.Context) {
 	var req domain.ReqJwtSign
@@ -56,7 +56,7 @@ func (h *jwtHandler) JwtSign(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param default body domain.ReqJwtToken true "json web token"
-// @Success 200 {object} jwt.MapClaims	"ok"
+// @Success 200 {object} domain.TokenClaimsDTO	"ok"
 // @Router /jwt/decode [post]
 func (h *jwtHandler) JwtDecode(c *gin.Context) {
 	var req domain.ReqJwtToken
@@ -78,7 +78,7 @@ func (h *jwtHandler) JwtDecode(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param default body domain.ReqJwtToken true "json web token"
-// @Success 200 {object} jwt.MapClaims	"ok"
+// @Success 200 {object} domain.TokenClaimsDTO	"ok"
 // @Router /jwt/verify [post]
 func (h *jwtHandler) JwtVerify(c *gin.Context) {
 	var req domain.ReqJwtToken

@@ -67,7 +67,9 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "ok",
-                        "schema": {}
+                        "schema": {
+                            "$ref": "#/definitions/domain.TokenClaimsDTO"
+                        }
                     }
                 }
             }
@@ -96,7 +98,9 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "ok",
-                        "schema": {}
+                        "schema": {
+                            "$ref": "#/definitions/domain.TokenClaimsDTO"
+                        }
                     }
                 }
             }
@@ -125,7 +129,9 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "ok",
-                        "schema": {}
+                        "schema": {
+                            "$ref": "#/definitions/domain.TokenClaimsDTO"
+                        }
                     }
                 }
             }
@@ -152,6 +158,14 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.TokenClaimsDTO": {
+            "type": "object",
+            "properties": {
+                "uid": {
                     "type": "string"
                 }
             }

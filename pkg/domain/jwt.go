@@ -9,8 +9,12 @@ import (
 
 // custom claims
 type Claims struct {
-	Uid           string `json:"uid"`
-	jwt.MapClaims `json:",inline"`
+	Uid            string `json:"uid"`
+	*jwt.MapClaims `json:",inline"`
+}
+
+type TokenClaimsDTO struct {
+	Uid string `json:"uid"`
 }
 
 type ReqJwtSign struct {
