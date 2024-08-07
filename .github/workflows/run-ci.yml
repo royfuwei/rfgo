@@ -1,0 +1,23 @@
+name: Run CI flow
+
+on:
+  workflow_call:
+    secrets:
+      GIT_TOKEN:
+        required: true
+      SONAR_HOST_URL:
+        required: true
+      SONAR_TOKEN:
+        required: true
+
+jobs:
+
+  sonarqube-scan:
+    uses: royfuwei/rf-devops/.github/workflows/_sonarqube.yml@main
+    name: Scan Project
+    secrets:
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    with:
+      projectKey: royfuwei-rfgo
+      projectName: royfuwei/rfgo
