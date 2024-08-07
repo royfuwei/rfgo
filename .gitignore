@@ -30,3 +30,6 @@ go.work.sum
 
 tmp
 api/jwt/*rsa*
+
+
+node_modules/

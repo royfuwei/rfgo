@@ -1,0 +1,15 @@
+name: CI main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci-main:
+    name: Run Main CI
+    uses: ./.github/workflows/run-ci.yml
+    secrets:
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
