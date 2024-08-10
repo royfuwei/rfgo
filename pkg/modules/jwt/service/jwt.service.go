@@ -37,10 +37,8 @@ func (svc *jwtService) JwtSign(expiresDuration time.Duration, uid *string, jwtId
 			ExpiresAt: expiresTime,
 			IssuedAt:  jwt.NewNumericDate(now),
 			NotBefore: jwt.NewNumericDate(now),
-			Issuer:    "test",
-			Subject:   "somebody",
-			ID:        "1",
-			Audience:  []string{"somebody_else"},
+			Issuer:    "royfuwei/rfgo",
+			Subject:   "royfuwei",
 		},
 	}
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
@@ -50,15 +48,15 @@ func (svc *jwtService) JwtSign(expiresDuration time.Duration, uid *string, jwtId
 
 func (svc *jwtService) JwtDecode(token *string) (*jwt.MapClaims, error) {
 	claims := &jwt.MapClaims{}
-	_, err := jwt.ParseWithClaims(*token, claims, func(token *jwt.Token) (interface{}, error) {
-		return svc.verifyKey, nil
-	}, jwt.WithStrictDecoding())
+	parser := jwt.NewParser()
+	_, _, err := parser.ParseUnverified(*token, claims)
 	return claims, err
 }
 
 func (svc *jwtService) JwtVerify(token *string) (*jwt.MapClaims, error) {
 	claims := &jwt.MapClaims{}
-	_, err := jwt.ParseWithClaims(*token, claims, func(token *jwt.Token) (interface{}, error) {
+	parser := jwt.NewParser()
+	_, err := parser.ParseWithClaims(*token, claims, func(token *jwt.Token) (interface{}, error) {
 		return svc.verifyKey, nil
 	})
 	return claims, err
