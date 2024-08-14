@@ -28,6 +28,7 @@ type ReqJwtToken struct {
 type JwtService interface {
 	JwtSign(expiresDuration time.Duration, uid *string, jwtId *string) (expiresAt int64, token string, err error)
 	JwtVerify(token *string) (*jwt.MapClaims, error)
+	JwtVerifyExpired(token *string) (*jwt.MapClaims, error)
 	JwtDecode(token *string) (*jwt.MapClaims, error)
 }
 
@@ -35,4 +36,5 @@ type JwtController interface {
 	JwtSign(c *gin.Context)
 	JwtDecode(c *gin.Context)
 	JwtVerify(c *gin.Context)
+	JwtVerifyExpired(c *gin.Context)
 }
