@@ -65,6 +65,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.TokenClaimsDTO'
       summary: Decode jwt token
+      tags:
+      - jwt
   /jwt/sign:
     post:
       consumes:
@@ -85,6 +87,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.TokenClaimsDTO'
       summary: Sign jwt token
+      tags:
+      - jwt
   /jwt/verify:
     post:
       consumes:
@@ -105,4 +109,28 @@ paths:
           schema:
             $ref: '#/definitions/domain.TokenClaimsDTO'
       summary: Verify jwt token
+      tags:
+      - jwt
+  /jwt/verify-expired:
+    post:
+      consumes:
+      - application/json
+      description: Verify jwt token
+      parameters:
+      - description: json web token
+        in: body
+        name: default
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ReqJwtToken'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/domain.TokenClaimsDTO'
+      summary: Verify expired jwt token
+      tags:
+      - jwt
 swagger: "2.0"

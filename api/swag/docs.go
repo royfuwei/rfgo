@@ -52,6 +52,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "jwt"
+                ],
                 "summary": "Decode jwt token",
                 "parameters": [
                     {
@@ -82,6 +85,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "jwt"
                 ],
                 "summary": "Sign jwt token",
                 "parameters": [
@@ -114,7 +120,44 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "jwt"
+                ],
                 "summary": "Verify jwt token",
+                "parameters": [
+                    {
+                        "description": "json web token",
+                        "name": "default",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.ReqJwtToken"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/domain.TokenClaimsDTO"
+                        }
+                    }
+                }
+            }
+        },
+        "/jwt/verify-expired": {
+            "post": {
+                "description": "Verify jwt token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jwt"
+                ],
+                "summary": "Verify expired jwt token",
                 "parameters": [
                     {
                         "description": "json web token",
