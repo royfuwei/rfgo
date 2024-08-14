@@ -2,6 +2,8 @@ package service
 
 import (
 	"crypto/rsa"
+	"errors"
+	"fmt"
 	"os"
 	"time"
 
@@ -60,6 +62,41 @@ func (svc *jwtService) JwtVerify(token *string) (*jwt.MapClaims, error) {
 		return svc.verifyKey, nil
 	})
 	return claims, err
+}
+
+func (svc *jwtService) JwtVerifyExpired(token *string) (*jwt.MapClaims, error) {
+	claims := &jwt.MapClaims{}
+	parser := jwt.NewParser(jwt.WithExpirationRequired())
+	parseToken, err := parser.ParseWithClaims(*token, claims, func(token *jwt.Token) (interface{}, error) {
+		return svc.verifyKey, nil
+	})
+	isErr := false
+	if err != nil {
+		switch {
+		case parseToken.Valid:
+			fmt.Println("You look nice today")
+			isErr = true
+		case errors.Is(err, jwt.ErrTokenMalformed):
+			fmt.Println("That's not even a token")
+			isErr = true
+		case errors.Is(err, jwt.ErrTokenSignatureInvalid):
+			// Invalid signature
+			fmt.Println("Invalid signature")
+			isErr = true
+		case errors.Is(err, jwt.ErrTokenExpired) || errors.Is(err, jwt.ErrTokenNotValidYet):
+			// Token is either expired or not active yet
+			// fmt.Println("Timing is everything")
+			isErr = false
+		default:
+			fmt.Println("Couldn't handle this token:", err)
+			isErr = true
+		}
+	}
+	if claims, ok := parseToken.Claims.(*jwt.MapClaims); ok && !isErr {
+		return claims, nil
+	} else {
+		return nil, err
+	}
 }
 
 func (svc *jwtService) setRsaKeys() {
